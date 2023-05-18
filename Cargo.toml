@@ -13,6 +13,7 @@ path = "src/main.rs"
 name = "zero2prod"
 
 [dependencies]
+actix-cors = "0.6.4"
 actix-web = "4.3.1"
 tokio = { version = "1.28.1", features = ["macros", "rt-multi-thread"]}
 
