@@ -2,12 +2,13 @@ use std::io::Error;
 use actix_web::{web, App, HttpServer, Responder, HttpResponse};
 use actix_web::dev::Server;
 use actix_cors::Cors;
+use std::net::TcpListener;
 
 async fn health_check() -> impl Responder {
     HttpResponse::Ok()
 }
 
-pub fn run() -> Result<Server, Error> {
+pub fn run(listener: TcpListener) -> Result<Server, Error> {
     let server = HttpServer::new(|| {
             let cors = Cors::default()
                 .allow_any_origin()
@@ -19,7 +20,7 @@ pub fn run() -> Result<Server, Error> {
                 .wrap(cors)
                 .route("/health_check", web::get().to(health_check))
         })
-        .bind("127.0.0.1:8000")?
+        .listen(listener)?
         .run();
 
     Ok(server)
