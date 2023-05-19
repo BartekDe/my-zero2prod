@@ -4,8 +4,12 @@ use actix_web::dev::Server;
 use actix_cors::Cors;
 use std::net::TcpListener;
 
-async fn health_check() -> impl Responder {
-    HttpResponse::Ok()
+async fn health_check() -> HttpResponse {
+    HttpResponse::Ok().finish()
+}
+
+async fn subscribe() -> HttpResponse {
+    HttpResponse::Ok().finish()
 }
 
 pub fn run(listener: TcpListener) -> Result<Server, Error> {
@@ -19,6 +23,7 @@ pub fn run(listener: TcpListener) -> Result<Server, Error> {
             App::new()
                 .wrap(cors)
                 .route("/health_check", web::get().to(health_check))
+                .route("/subscriptions", web::post().to(subscribe))
         })
         .listen(listener)?
         .run();
