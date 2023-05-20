@@ -9,5 +9,4 @@ async fn main() -> std::io::Result<()> {
     let listener = TcpListener::bind(address)?;
 
     run(listener)?.await
-
 }
