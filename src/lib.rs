@@ -1,14 +1,21 @@
 use std::io::Error;
 use actix_web::{web, App, HttpServer, Responder, HttpResponse};
-use actix_web::dev::Server;
+use actix_web::dev::{JsonBody, Server};
 use actix_cors::Cors;
 use std::net::TcpListener;
+use actix_web::dev::JsonBody::Body;
 
 async fn health_check() -> HttpResponse {
     HttpResponse::Ok().finish()
 }
 
-async fn subscribe() -> HttpResponse {
+#[derive(serde::Deserialize)]
+struct FormData {
+    name: String,
+    email: String,
+}
+
+async fn subscribe(_form: web::Form<FormData>) -> HttpResponse {
     HttpResponse::Ok().finish()
 }
 
